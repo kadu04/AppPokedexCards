@@ -55,6 +55,11 @@ struct SignUpView: View {
                 )
                 .padding(.bottom, 30)
             
+            if viewModel.isLoading {
+                ProgressView()
+                    .padding()
+            }
+            
             Button {
                 viewModel.signUp()
             } label: {
@@ -65,10 +70,14 @@ struct SignUpView: View {
                     .foregroundColor(.white)
                     .cornerRadius(24.0)
             }
+            .alert(isPresented: $viewModel.formInvalid) {
+                Alert(title: Text(viewModel.alertText))
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.horizontal, 32)
         .background(Color.init(red: 240 / 255, green: 231 / 255, blue: 210 / 255))
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

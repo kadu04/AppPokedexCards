@@ -49,6 +49,11 @@ struct SignInView: View {
                     )
                     .padding(.bottom, 30)
                 
+                if viewModel.isLoading {
+                    ProgressView()
+                        .padding()
+                }
+                
                 Button {
                     viewModel.signIn()
                 } label: {
@@ -59,13 +64,14 @@ struct SignInView: View {
                         .foregroundColor(Color.white)
                         .cornerRadius(24.0)
                 }
+                .alert(isPresented: $viewModel.formInvalid) {
+                    Alert(title: Text(viewModel.alertText))
+                }
 
                 Divider()
                     .padding()
                 
-                Button {
-                    print("Clicado 2")
-                } label: {
+                NavigationLink(destination: SignUpView()) {
                     Text("Não tem uma conta? Clique aqui")
                         .foregroundColor(Color.black)
                 }
@@ -73,6 +79,8 @@ struct SignInView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, 32)
             .background(Color.init(red: 240 / 255, green: 231 / 255, blue: 210 / 255))
+            .navigationTitle("")
+            .navigationBarHidden(true)
         }
     }
 }
